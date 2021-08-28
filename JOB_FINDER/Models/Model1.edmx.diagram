@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="43cccce51d2348d087401186144528e2" Name="Diagram1">
+        <EntityTypeShape EntityType="JobFinderDBModel.APPLICATION" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobFinderDBModel.COMPANY" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobFinderDBModel.POST" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobFinderDBModel.RECOMMENDATION" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobFinderDBModel.REVIEW" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobFinderDBModel.USER" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <AssociationConnector Association="JobFinderDBModel.FK__APPLICATI__PostI__21B6055D" ManuallyRouted="false" />
+        <AssociationConnector Association="JobFinderDBModel.FK__APPLICATI__UserI__20C1E124" ManuallyRouted="false" />
+        <AssociationConnector Association="JobFinderDBModel.FK__POST__CompanyID__1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="JobFinderDBModel.FK__RECOMMEND__Compa__0EA330E9" ManuallyRouted="false" />
+        <AssociationConnector Association="JobFinderDBModel.FK__REVIEW__CompanyI__15502E78" ManuallyRouted="false" />
+        <AssociationConnector Association="JobFinderDBModel.FK__RECOMMEND__UserI__0F975522" ManuallyRouted="false" />
+        <AssociationConnector Association="JobFinderDBModel.FK__REVIEW__UserID__145C0A3F" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

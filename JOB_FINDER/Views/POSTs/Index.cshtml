@@ -1,0 +1,48 @@
+﻿@model IEnumerable<JOB_FINDER.Models.POST>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-sm-12" style="background-color: rgb(250 249 249); margin-top: 30px;">
+            @using (Html.BeginForm("Index", "POSTs", FormMethod.Get))
+            {
+                <h3 style="margin-top: 15px">Experience: </h3>
+                @Html.RadioButton("searchByExp", "0-2")<p>0-2</p>
+                @Html.RadioButton("searchByExp", "3-5")<p>3-5</p>
+                @Html.RadioButton("searchByExp", "6-10")<p>6-10</p>
+                <h3 style="margin-top: 7.5px">Salary: </h3>
+                @Html.RadioButton("searchBySal", "5,000-20,000")<p>5,000-20,000</p>
+                @Html.RadioButton("searchBySal", "20,001-50,000")<p>20,001-50,000</p>
+                @Html.RadioButton("searchBySal", "50,000+")<p>50,000+</p>
+                <h3 style="margin-top: 7.5px">Location: </h3>
+                <div style="margin-bottom: 15px">
+                    @Html.TextBox("Searching")
+                    <input type="submit" value="Filter" class="btn btn-success" />
+                </div>
+            }
+        </div>
+        <div class="col-md-8 col-sm-12">
+            @if (Model.Count() == 0)
+            {
+                <h2>Nothing Found!</h2>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <div class="card" style="background-color: rgb(250 249 249);">
+                        <div class="card-header" style="padding: 10px; margin-top: 15px; background-color: rgb(231 231 224); ">
+                            @Html.DisplayNameFor(model => model.COMPANY.Name): @Html.DisplayFor(modelItem => item.COMPANY.Name)
+                        </div>
+                        <div class="card-body" style="padding: 10px; margin-top: 15px; margin-bottom: 15px;">
+                            <h5 class="card-title">@Html.DisplayNameFor(model => model.Description): @Html.DisplayFor(modelItem => item.Description)</h5>
+                            <p class="card-text">@Html.DisplayNameFor(model => model.Location): @Html.DisplayFor(modelItem => item.Location)</p>
+                            <p class="card-text">@Html.DisplayNameFor(model => model.Experience): @Html.DisplayFor(modelItem => item.Experience)</p>
+                            <p class="card-text">@Html.DisplayNameFor(model => model.Salary): @Html.DisplayFor(modelItem => item.Salary)</p>
+                            <a href="#" class="btn btn-success">Apply</a>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
