@@ -194,8 +194,8 @@ namespace JOB_FINDER.Controllers
                 user.Name = uSER.Name;
                 user.Email = uSER.Email;
                 user.Address = uSER.Address;
-
-                if(uSER.Password==null)
+                user.Phone = uSER.Phone;
+                if (uSER.Password==null)
                 {
                     user.Password = user.Password;
                 }
@@ -245,6 +245,53 @@ namespace JOB_FINDER.Controllers
 
             // return FilePathResult to download
             return File(path, contentType, fileName);
+        }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(USER uSER)
+        {
+            //ModelState.Clear();
+            db.Configuration.ValidateOnSaveEnabled = false;
+
+            string usermail = Convert.ToString(uSER.Email);
+            USER user = db.USERS.FirstOrDefault(u => u.Email.Equals(usermail));
+
+            if (user != null)
+            {
+                
+                //user = db.USERS.FirstOrDefault(u => u.Name.Equals(userName));
+
+                user.Name = user.Name;
+                user.Email = user.Email;
+                user.Address = user.Address;
+
+                
+                user.Password = uSER.Password;
+
+                user.University = user.University;
+                user.Description = user.Description;
+                user.Skill = user.Skill;
+                user.CV = user.CV;
+
+                db.Set<USER>().AddOrUpdate(user);
+
+                db.SaveChanges();
+                return RedirectToAction("SignIn", "USERs");
+                //return View();
+            }
+            else
+            {
+                ViewBag.Notification = "An Error Occured";
+                return View();
+            }
+
+            return RedirectToAction("SignIn", "USERs");
+           // return View();
         }
 
 
