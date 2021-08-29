@@ -6,6 +6,7 @@ using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using JOB_FINDER.Data;
@@ -17,7 +18,7 @@ namespace JOB_FINDER.Controllers
     {
         private JobFinderDBEntities db = new JobFinderDBEntities();
 
-        
+
 
         //private JobFinderDBContext
 
@@ -36,13 +37,13 @@ namespace JOB_FINDER.Controllers
         }
 
         [HttpPost]
-     
+
         public ActionResult SignUp(USER uSER)
         {
 
-            if (db.USERS.Any(x => x.Name == uSER.Name))
+            if (db.USERS.Any(x => x.Email == uSER.Email))
             {
-                ViewBag.Notification = "An account with this username already exits";
+                ViewBag.Notification = "An account with this email already exits";
             }
             else
             {
@@ -51,6 +52,7 @@ namespace JOB_FINDER.Controllers
                 Session["UserID"] = uSER.UserID.ToString();
                 Session["Name"] = uSER.Name.ToString();
                 Session["Password"] = uSER.Password.ToString();
+                Session["Email"] = uSER.Email.ToString();
                 return RedirectToAction("SignIn", "USERs");
 
             }
@@ -58,30 +60,31 @@ namespace JOB_FINDER.Controllers
         }
 
         [HttpGet]
-        
+
         public ActionResult SignIn()
         {
             return View();
         }
 
         [HttpPost]
-   
+
         public ActionResult SignIn(USER uSER)
         {
-            var checklogin = db.USERS.Where(x => x.Name.Equals(uSER.Name) && x.Password.Equals(uSER.Password)).FirstOrDefault();
+            var checklogin = db.USERS.Where(x => x.Email.Equals(uSER.Email) && x.Password.Equals(uSER.Password)).FirstOrDefault();
 
             if (checklogin != null)
             {
-                Session["UserID"] = uSER.UserID.ToString();
+                Session["UserID"] = checklogin.UserID.ToString();
                 id = uSER.UserID;
-                Session["Name"] = uSER.Name.ToString();
-                name= uSER.Name.ToString();
+                //Session["Name"] = uSER.Name.ToString();
+                //name= uSER.Name.ToString();
+                Session["Email"] = uSER.Email.ToString();
                 //return RedirectToAction("SignUp", "Home");
                 return RedirectToAction("ViewProfile", "USERs");
             }
             else
             {
-                ViewBag.Notification = "Wrong username or password";
+                ViewBag.Notification = "Wrong email or password";
             }
             return View();
         }
@@ -96,12 +99,12 @@ namespace JOB_FINDER.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult ViewProfile()
         {
-            if (Session["Name"]!=null)
+            if (Session["Email"] != null)
             {
 
-                string userName = Convert.ToString(Session["Name"]);
+                string userMail = Convert.ToString(Session["Email"]);
 
-                var userDetails = db.USERS.Where(x => x.Name.Equals(userName)).FirstOrDefault();
+                var userDetails = db.USERS.Where(x => x.Email.Equals(userMail)).FirstOrDefault();
 
                 if (userDetails.CV == null)
                 {
@@ -121,24 +124,24 @@ namespace JOB_FINDER.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult EditProfile(USER uSER, HttpPostedFileBase file)
         {
-            string filename=null;
-            int uid=0;
-            if (Session["Name"] != null)
+            string filename = null;
+            int uid = 0;
+            if (Session["Email"] != null)
             {
-                string userName = Convert.ToString(Session["Name"]);
-                USER user = db.USERS.FirstOrDefault(u => u.Name.Equals(userName));
+                string userMail = Convert.ToString(Session["Email"]);
+                USER user = db.USERS.FirstOrDefault(u => u.Email.Equals(userMail));
                 uid = user.UserID;
                 filename = user.CV;
             }
-               
+
             if (file != null && file.ContentLength > 0)
                 try
                 {
                     string path = Path.Combine(Server.MapPath("~/Files"),
-                                               Path.GetFileName("Uid_"+Convert.ToString(uid)+"_"+file.FileName));
+                                               Path.GetFileName("Uid_" + Convert.ToString(uid) + file.FileName));
                     file.SaveAs(path);
 
-                    filename = "Uid_"+Convert.ToString(uid)+"_"+Path.GetFileName(file.FileName);
+                    filename = "Uid_" + Convert.ToString(uid) + Path.GetFileName(file.FileName);
 
 
 
@@ -186,16 +189,16 @@ namespace JOB_FINDER.Controllers
             }
 
             db.Configuration.ValidateOnSaveEnabled = false;
-            if (Session["Name"]!=null)
+            if (Session["Email"] != null)
             {
-                string userName = Convert.ToString(Session["Name"]);
-                USER user = db.USERS.FirstOrDefault(u => u.Name.Equals(userName));
+                string userMail = Convert.ToString(Session["Email"]);
+                USER user = db.USERS.FirstOrDefault(u => u.Email.Equals(userMail));
 
                 user.Name = uSER.Name;
                 user.Email = uSER.Email;
                 user.Address = uSER.Address;
-
-                if(uSER.Password==null)
+                user.Phone = uSER.Phone;
+                if (uSER.Password == null)
                 {
                     user.Password = user.Password;
                 }
@@ -212,23 +215,23 @@ namespace JOB_FINDER.Controllers
                     user.CV = filename;
 
                 db.Set<USER>().AddOrUpdate(user);
-                
+
                 db.SaveChanges();
-                return RedirectToAction("ViewProfile","USERs");
+                return RedirectToAction("ViewProfile", "USERs");
                 //return View();
             }
 
-            return RedirectToAction("SignOut","USERs");
+            return RedirectToAction("SignOut", "USERs");
         }
 
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult EditProfile()
         {
 
-            string userName = Convert.ToString(Session["Name"]);
+            string userMail = Convert.ToString(Session["Email"]);
 
-            var userDetails = db.USERS.Where(x => x.Name.Equals(userName)).FirstOrDefault();
-          
+            var userDetails = db.USERS.Where(x => x.Email.Equals(userMail)).FirstOrDefault();
+
 
             return View(userDetails);
 
@@ -236,7 +239,7 @@ namespace JOB_FINDER.Controllers
 
         public FileResult Download(string fileName)
         {
-            
+
             string path = Path.Combine(Server.MapPath("~/Files/"), fileName);
 
             // set content type, e.g. 'application/pdf' for PDF files
@@ -245,6 +248,79 @@ namespace JOB_FINDER.Controllers
 
             // return FilePathResult to download
             return File(path, contentType, fileName);
+        }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(USER uSER)
+        {
+            //ModelState.Clear();
+            db.Configuration.ValidateOnSaveEnabled = false;
+
+            string usermail = Convert.ToString(uSER.Email);
+            USER user = db.USERS.FirstOrDefault(u => u.Email.Equals(usermail));
+
+            MailMessage mm = new MailMessage("fuadbinakhter@gmail.com", "fuadishraque42@gmail.com"/*txtEmail.Text.Trim()*/);
+            mm.Subject = "Password Recovery";
+            mm.Body = string.Format("Hi {0},<br /><br />Your password is {1}.<br /><br />Thank You.", user.Name, user.Password);
+            mm.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com";
+            smtp.EnableSsl = true;
+            NetworkCredential NetworkCred = new NetworkCredential();
+            NetworkCred.UserName = "fuadbinakhter@gmail.com";
+            NetworkCred.Password = "fuadishraque42@gmail.com";
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = NetworkCred;
+            smtp.Port = 587;
+            smtp.Send(mm);
+
+            /* if (user != null)
+             {
+
+                 //user = db.USERS.FirstOrDefault(u => u.Name.Equals(userName));
+
+                 user.Name = user.Name;
+                 user.Email = user.Email;
+                 user.Address = user.Address;
+
+
+                 user.Password = uSER.Password;
+
+                 user.University = user.University;
+                 user.Description = user.Description;
+                 user.Skill = user.Skill;
+                 user.CV = user.CV;
+
+                 db.Set<USER>().AddOrUpdate(user);
+
+                 db.SaveChanges();
+                 return RedirectToAction("SignIn", "USERs");
+                 //return View();
+             }
+             else
+             {
+                 ViewBag.Notification = "An Error Occured";
+                 return View();
+             }*/
+
+            return RedirectToAction("SignIn", "USERs");
+            // return View();
+        }
+
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
+        public ActionResult UpdatePassword()
+        {
+            return View();
+        }
+
+        public ActionResult UpdatePassword(USER uSER)
+        {
+            return View();
         }
 
 
