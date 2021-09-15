@@ -1,0 +1,41 @@
+﻿@model IEnumerable<JOB_FINDER.Models.USER>
+
+@{
+    ViewBag.Title = "SeeApplicantProfile";
+}
+
+<h2>SeeApplicantProfile</h2>
+
+@foreach (var item in Model)
+{
+<div>
+    <p>
+        @Html.DisplayFor(modelItem => item.Name)
+    </p>
+    <p>
+        @Html.DisplayFor(modelItem => item.Phone)
+    </p>
+    <p>
+        @Html.DisplayFor(modelItem => item.Email)
+    </p>
+    <p>
+        @Html.DisplayFor(modelItem => item.University)
+    </p>
+    <p>
+        @Html.DisplayFor(modelItem => item.Skill)
+    </p>
+    <p>
+        @Html.DisplayFor(modelItem => item.Address)
+    </p>
+    <p>
+        @if (item.CV == null)
+        {
+            <p>No CV found.</p>
+        }
+        else
+        {
+            @Html.ActionLink("Download", "Download", "USERs", new { fileName = item.CV }, null)
+        }
+    </p>
+</div>
+}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobFinder</title>
+    <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -21,8 +21,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Search for Jobs", "Index", "POSTs")</li>
+                    <li>@Html.ActionLink("Company", "SignUp", "COMPANies")</li>
+                    <li>@Html.ActionLink("Job Seeker", "SignUp", "USERs")</li>
                 </ul>
             </div>
         </div>
@@ -30,8 +31,8 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Job Finder</p>
+        <footer style="margin-top: 30px; color: #5cb85c; font-size: 25px; margin-bottom: 20px; ">
+            <p>&copy; @DateTime.Now.Year - JobFinder</p>
         </footer>
     </div>
 

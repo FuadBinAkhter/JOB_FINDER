@@ -69,116 +69,141 @@ namespace JOB_FINDER.Controllers
             return View(company);
         }
 
-    /*private Job_FinderContext db = new Job_FinderContext();
-
-    // GET: COMPANies
-    public ActionResult Index()
-    {
-        return View(db.COMPANies.ToList());
-    }
-
-    // GET: COMPANies/Details/5
-    public ActionResult Details(int? id)
-    {
-        if (id == null)
+        //signout added
+        public ActionResult SignOut()
         {
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            Session["company_email"] = null;
+            Session.Abandon();
+            return RedirectToAction("Index", "Home");
         }
-        COMPANY cOMPANY = db.COMPANies.Find(id);
-        if (cOMPANY == null)
+
+        public ActionResult SeePrevPostst(int? id)
         {
-            return HttpNotFound();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            COMPANY cOMPANY = db.COMPANies.Find(id);
+
+            if (cOMPANY == null)
+            {
+                return HttpNotFound();
+            }
+            return View(db.POSTs.Where(x => x.CompanyID == id).ToList());
+            //return View(cOMPANY);
         }
-        return View(cOMPANY);
-    }
 
-    // GET: COMPANies/Create
-    public ActionResult Create()
-    {
-        return View();
-    }
 
-    // POST: COMPANies/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-    // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Create([Bind(Include = "CompanyID,Name,Description,Address,Phone,Email")] COMPANY cOMPANY)
-    {
-        if (ModelState.IsValid)
+        /*private Job_FinderContext db = new Job_FinderContext();
+
+        // GET: COMPANies
+        public ActionResult Index()
         {
-            db.COMPANies.Add(cOMPANY);
+            return View(db.COMPANies.ToList());
+        }
+
+        // GET: COMPANies/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            COMPANY cOMPANY = db.COMPANies.Find(id);
+            if (cOMPANY == null)
+            {
+                return HttpNotFound();
+            }
+            return View(cOMPANY);
+        }
+
+        // GET: COMPANies/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: COMPANies/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "CompanyID,Name,Description,Address,Phone,Email")] COMPANY cOMPANY)
+        {
+            if (ModelState.IsValid)
+            {
+                db.COMPANies.Add(cOMPANY);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(cOMPANY);
+        }
+
+        // GET: COMPANies/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            COMPANY cOMPANY = db.COMPANies.Find(id);
+            if (cOMPANY == null)
+            {
+                return HttpNotFound();
+            }
+            return View(cOMPANY);
+        }
+
+        // POST: COMPANies/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "CompanyID,Name,Description,Address,Phone,Email")] COMPANY cOMPANY)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(cOMPANY).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(cOMPANY);
+        }
+
+        // GET: COMPANies/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            COMPANY cOMPANY = db.COMPANies.Find(id);
+            if (cOMPANY == null)
+            {
+                return HttpNotFound();
+            }
+            return View(cOMPANY);
+        }
+
+        // POST: COMPANies/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            COMPANY cOMPANY = db.COMPANies.Find(id);
+            db.COMPANies.Remove(cOMPANY);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        return View(cOMPANY);
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }*/
     }
-
-    // GET: COMPANies/Edit/5
-    public ActionResult Edit(int? id)
-    {
-        if (id == null)
-        {
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        }
-        COMPANY cOMPANY = db.COMPANies.Find(id);
-        if (cOMPANY == null)
-        {
-            return HttpNotFound();
-        }
-        return View(cOMPANY);
-    }
-
-    // POST: COMPANies/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-    // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Edit([Bind(Include = "CompanyID,Name,Description,Address,Phone,Email")] COMPANY cOMPANY)
-    {
-        if (ModelState.IsValid)
-        {
-            db.Entry(cOMPANY).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-        return View(cOMPANY);
-    }
-
-    // GET: COMPANies/Delete/5
-    public ActionResult Delete(int? id)
-    {
-        if (id == null)
-        {
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        }
-        COMPANY cOMPANY = db.COMPANies.Find(id);
-        if (cOMPANY == null)
-        {
-            return HttpNotFound();
-        }
-        return View(cOMPANY);
-    }
-
-    // POST: COMPANies/Delete/5
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public ActionResult DeleteConfirmed(int id)
-    {
-        COMPANY cOMPANY = db.COMPANies.Find(id);
-        db.COMPANies.Remove(cOMPANY);
-        db.SaveChanges();
-        return RedirectToAction("Index");
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            db.Dispose();
-        }
-        base.Dispose(disposing);
-    }*/
-}
 }

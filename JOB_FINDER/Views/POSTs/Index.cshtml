@@ -38,7 +38,11 @@
                             <p class="card-text">@Html.DisplayNameFor(model => model.Location): @Html.DisplayFor(modelItem => item.Location)</p>
                             <p class="card-text">@Html.DisplayNameFor(model => model.Experience): @Html.DisplayFor(modelItem => item.Experience)</p>
                             <p class="card-text">@Html.DisplayNameFor(model => model.Salary): @Html.DisplayFor(modelItem => item.Salary)</p>
-                            <a href="#" class="btn btn-success">Apply</a>
+                            <!--<a href="#" class="btn btn-success">Apply</a>-->
+                            <!--button changed for CP 2-->
+                            <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Apply", "POSTs", new { id = item.PostID })'">Apply</button>
+
+
                         </div>
                     </div>
                 }

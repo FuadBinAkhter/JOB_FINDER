@@ -4,78 +4,39 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Phone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.University)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Skill)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CV)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.University)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Skill)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CV)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserID })
-        </td>
-    </tr>
+@using (Html.BeginForm("Index", "USERs", FormMethod.Get))
+{
+    <div style="padding: 5px; margin-top: 25px; margin-bottom: 15px; font-size: 20px; text-align: center">
+        <span>What skills are you looking for?</span>
+        <span>
+            @Html.TextBox("Searching")
+            <input type="submit" value="Search" class="btn btn-success" style="font-size: 18px;" />
+        </span>
+    </div>
 }
 
-</table>
+@if (Model.Count() == 0)
+{
+    <h2>Nothing Found!</h2>
+}
+else
+{
+    foreach (var item in Model)
+    {
+
+        <div style="background-color: rgb(250 249 249);">
+            <div style="padding: 25px; margin-top: 15px; margin-bottom: 15px;">
+                <span style="font-size: 20px;">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </span>
+                <span class="text-danger" style="font-size: 15px;">
+                    @Html.DisplayNameFor(model => model.Skill): @Html.DisplayFor(modelItem => item.Skill)
+                </span>
+                <span style="float: right;">
+                    @Html.ActionLink("View Profile", "SeeApplicantProfile", "USERs", new { id = item.UserID },  new { @class ="btn btn-success" } )
+                </span>
+            </div>
+        </div>
+
+    }
+}

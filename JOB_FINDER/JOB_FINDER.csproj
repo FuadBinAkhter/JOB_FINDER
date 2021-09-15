@@ -131,9 +131,12 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\APPLICATIONsController.cs" />
     <Compile Include="Controllers\COMPANiesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\POSTsController.cs" />
+    <Compile Include="Controllers\RECOMMENDATIONsController.cs" />
+    <Compile Include="Controllers\REVIEWsController.cs" />
     <Compile Include="Controllers\USERsController.cs" />
     <Compile Include="Data\Job_FinderContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -180,10 +183,12 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Compile Include="Controllers\ApplicationJoinedUserController.cs" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Compile Include="Models\ApplicationJoinedUser.cs" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
@@ -214,6 +219,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\COMPANies\SeePrevPostst.cshtml" />
+    <Content Include="Views\ApplicationJoinedUser\Index.cshtml" />
+    <None Include="Views\POSTs\Apply.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -246,6 +254,7 @@
     <Content Include="Views\POSTs\Index.cshtml" />
     <Content Include="Views\USERs\EditProfile.cshtml" />
     <Content Include="Views\USERs\ChangePassword.cshtml" />
+    <Content Include="Views\USERs\SeeApplicantProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

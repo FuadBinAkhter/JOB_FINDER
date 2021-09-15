@@ -67,7 +67,18 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.CompanyID })
 </p>
 -->
+<!--Second Checkpoint-->
+@Html.ActionLink("See your previous posts?", "SeePrevPostst", new { id = Model.CompanyID })
+<!---->
 
 <div>
-    <p><a href="/POSTs/Index" class="btn btn-primary btn-lg">Create Post</a></p>
+    <p><a href="/POSTs/Create" class="btn btn-primary btn-lg">Create Post</a></p>
+    <p><a href="/USERs/Index" class="btn btn-primary btn-lg">Recruit</a></p>
+</div>
+
+<!--Signout button added-->
+<div class="form-group">
+    <div class="col-md-offset-4 col-md-8">
+        <h2 style="margin-left: 100px;">@Html.ActionLink("SignOut", "SignOut", "COMPANies")</h2>
+    </div>
 </div>

@@ -15,6 +15,29 @@ namespace JOB_FINDER.Controllers
         private JobFinderDBEntities db = new JobFinderDBEntities();
 
         // GET: POSTs
+        // GET: POSTs/Create
+        public ActionResult Create()
+        {
+            ViewBag.CompanyID = new SelectList(db.COMPANies, "CompanyID", "Name");
+            return View();
+        }
+        // POST: POSTs/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "PostID,CompanyID,Salary,Location,Experience,Description")] POST pOST)
+        {
+            if (ModelState.IsValid)
+            {
+                db.POSTs.Add(pOST);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.CompanyID = new SelectList(db.COMPANies, "CompanyID", "Name", pOST.CompanyID);
+            return View(pOST);
+        }
         public ActionResult Index(string searchByExp, string searchBySal, string searching)
         {
             if (searchByExp == "0-2")
@@ -181,6 +204,28 @@ namespace JOB_FINDER.Controllers
                     }
                 }
             }
+        }
+
+        /*Apply method added for CP 2*/
+        public ActionResult Apply(int? id)
+        {
+            if (Session["UserID"] == null)
+            {
+                ViewBag.Notification = "Please login first!";
+            }
+            else
+            {
+                APPLICATION aPPLICATION = new APPLICATION();
+                aPPLICATION.ApplicationDate = DateTime.Today;
+                aPPLICATION.PostID = (int)id;
+                aPPLICATION.UserID = (int)Session["UserID"];
+
+                db.APPLICATIONS.Add(aPPLICATION);
+                db.SaveChanges();
+                ViewBag.Notification = "Application confirmed!";
+            }
+
+            return View();
         }
 
         /*

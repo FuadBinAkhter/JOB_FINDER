@@ -26,11 +26,17 @@ namespace JOB_FINDER.Controllers
         string name;
         int id;
 
-        public ActionResult Index()
+        public ActionResult Index(string searching)
         {
-            return View(db.USERS.ToList());
+            if (!String.IsNullOrWhiteSpace(searching))
+            {
+                return View(db.USERS.Where(x => x.Skill.Contains(searching)).ToList());
+            }
+            else
+            {
+                return View(db.USERS.ToList());
+            }
         }
-
         public ActionResult SignUp()
         {
             return View();
@@ -74,12 +80,11 @@ namespace JOB_FINDER.Controllers
 
             if (checklogin != null)
             {
-                Session["UserID"] = checklogin.UserID.ToString();
+                Session["UserID"] = checklogin.UserID;
                 id = uSER.UserID;
-                //Session["Name"] = uSER.Name.ToString();
-                //name= uSER.Name.ToString();
+               
                 Session["Email"] = uSER.Email.ToString();
-                //return RedirectToAction("SignUp", "Home");
+             
                 return RedirectToAction("ViewProfile", "USERs");
             }
             else
@@ -144,39 +149,6 @@ namespace JOB_FINDER.Controllers
                     filename = "Uid_" + Convert.ToString(uid) + Path.GetFileName(file.FileName);
 
 
-
-                    /*if (Session["Name"] != null)
-                    {
-                        string userName = Convert.ToString(Session["Name"]);
-                        USER user = db.USERS.FirstOrDefault(u => u.Name.Equals(userName));
-
-                        user.Name = uSER.Name;
-                        user.Email = uSER.Email;
-                        user.Address = uSER.Address;
-
-                        if (uSER.Password == null)
-                        {
-                            user.Password = user.Password;
-                        }
-                        else
-                            user.Password = uSER.Password;
-
-                        user.University = uSER.University;
-                        user.Description = uSER.Description;
-                        user.Skill = uSER.Skill;
-
-                        if (Path.GetFileName(file.FileName) == null)
-                            user.CV = user.CV;
-                        else
-                            user.CV = Path.GetFileName(file.FileName);
-
-                        db.Set<USER>().AddOrUpdate(user);
-
-                        db.SaveChanges();
-                        //return RedirectToAction("ViewProfile", "USERs");
-                        return View();
-                    }*/
-
                     ViewBag.Message = path;
                 }
                 catch (Exception ex)
@@ -218,10 +190,19 @@ namespace JOB_FINDER.Controllers
 
                 db.SaveChanges();
                 return RedirectToAction("ViewProfile", "USERs");
-                //return View();
+               
             }
 
             return RedirectToAction("SignOut", "USERs");
+        }
+
+        public ActionResult SeeApplicantProfile(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            return View(db.USERS.Where(x => x.UserID == id).ToList());
         }
 
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
@@ -264,7 +245,7 @@ namespace JOB_FINDER.Controllers
             string usermail = Convert.ToString(uSER.Email);
             USER user = db.USERS.FirstOrDefault(u => u.Email.Equals(usermail));
 
-            MailMessage mm = new MailMessage("fuadbinakhter@gmail.com", "fuadishraque42@gmail.com"/*txtEmail.Text.Trim()*/);
+            MailMessage mm = new MailMessage("job.finder.840@gmail.com", usermail/*txtEmail.Text.Trim()*/);
             mm.Subject = "Password Recovery";
             mm.Body = string.Format("Hi {0},<br /><br />Your password is {1}.<br /><br />Thank You.", user.Name, user.Password);
             mm.IsBodyHtml = true;
@@ -272,41 +253,14 @@ namespace JOB_FINDER.Controllers
             smtp.Host = "smtp.gmail.com";
             smtp.EnableSsl = true;
             NetworkCredential NetworkCred = new NetworkCredential();
-            NetworkCred.UserName = "fuadbinakhter@gmail.com";
-            NetworkCred.Password = "fuadishraque42@gmail.com";
+            NetworkCred.UserName = "job.finder.840@gmail.com";
+            NetworkCred.Password = "jobfinder840@@";
             smtp.UseDefaultCredentials = false;
             smtp.Credentials = NetworkCred;
             smtp.Port = 587;
             smtp.Send(mm);
 
-            /* if (user != null)
-             {
-
-                 //user = db.USERS.FirstOrDefault(u => u.Name.Equals(userName));
-
-                 user.Name = user.Name;
-                 user.Email = user.Email;
-                 user.Address = user.Address;
-
-
-                 user.Password = uSER.Password;
-
-                 user.University = user.University;
-                 user.Description = user.Description;
-                 user.Skill = user.Skill;
-                 user.CV = user.CV;
-
-                 db.Set<USER>().AddOrUpdate(user);
-
-                 db.SaveChanges();
-                 return RedirectToAction("SignIn", "USERs");
-                 //return View();
-             }
-             else
-             {
-                 ViewBag.Notification = "An Error Occured";
-                 return View();
-             }*/
+           
 
             return RedirectToAction("SignIn", "USERs");
             // return View();
@@ -325,18 +279,7 @@ namespace JOB_FINDER.Controllers
 
 
 
-        /*[AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult FileUpload(HttpPostedFileBase uploadFile)
-        {
-            if (uploadFile.ContentLength > 0)
-            {
-                string filePath = Path.Combine(HttpContext.Server.MapPath("../Files"),
-                                               Path.GetFileName(uploadFile.FileName));
-                uploadFile.SaveAs(filePath);
-            }
-            return View();
-        }
-        */
+   
 
 
 
