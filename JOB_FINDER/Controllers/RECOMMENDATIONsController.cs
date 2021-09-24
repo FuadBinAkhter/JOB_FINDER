@@ -37,10 +37,14 @@ namespace JOB_FINDER.Controllers
         }
 
         // GET: RECOMMENDATIONs/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.CompanyID = new SelectList(db.COMPANies, "CompanyID", "Name");
-            ViewBag.UserID = new SelectList(db.USERS, "UserID", "Name");
+            USER uSER = db.USERS.Find(id);
+            ViewBag.UserName = uSER.Name;
+
+            ViewBag.UserID = id;
+            ViewBag.CompanyID = Session["CompanyID"];
+            ViewBag.Date = DateTime.Today.ToString("d");
             return View();
         }
 
@@ -55,7 +59,7 @@ namespace JOB_FINDER.Controllers
             {
                 db.RECOMMENDATIONs.Add(rECOMMENDATION);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("SeeApplicantProfile", "USERs", new { id = rECOMMENDATION.UserID });
             }
 
             ViewBag.CompanyID = new SelectList(db.COMPANies, "CompanyID", "Name", rECOMMENDATION.CompanyID);

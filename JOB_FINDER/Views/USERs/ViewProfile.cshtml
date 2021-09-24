@@ -43,14 +43,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.University)
         </dt>
 
@@ -87,22 +79,34 @@
             {
                 @Html.ActionLink("Download", "Download", "USERs", new { fileName = Model.CV }, null)
             }
-            </dd>
+        </dd>
 
     </dl>
-    </div>
+</div>
 
-    <div class="form-group">
-        <div class="col-md-offset-4 col-md-8">
-            <h2 style="margin-left: 100;">@Html.ActionLink("SignOut", "SignOut", "USERs")</h2>
-        </div>
+<div class="form-group">
+    <div class="col-md-offset-4 col-md-8">
+        <h2 style="margin-left: 100;">@Html.ActionLink("SignOut", "SignOut", "USERs")</h2>
     </div>
+</div>
 
-    <div class="form-group">
-        <div class="col-md-offset-4 col-md-8">
-            <h2>@Html.ActionLink("EditProfile", "EditProfile", "USERs")</h2>
-        </div>
+<div class="form-group">
+    <div class="col-md-offset-4 col-md-8">
+        <h2>@Html.ActionLink("EditProfile", "EditProfile", "USERs")</h2>
     </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-4 col-md-8">
+        <h2>@Html.ActionLink("Update Password", "UpdatePassword", "USERs")</h2>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-4 col-md-8">
+        <h2 style="margin-left: 100;">@Html.ActionLink("Show Applications", "Index", "APPLICATIONs")</h2>
+    </div>
+</div>
 
 
 

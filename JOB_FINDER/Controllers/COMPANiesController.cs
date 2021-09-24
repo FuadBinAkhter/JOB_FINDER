@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using JOB_FINDER.Data;
@@ -49,6 +51,9 @@ namespace JOB_FINDER.Controllers
 
                 if (company != null)
                 {
+                    //Added after merge
+                    Session["CompanyID"] = company.CompanyID;
+                    //
                     Session["company_email"] = company.Email;
                     return RedirectToAction("CompanyProfile");
                 }
@@ -91,6 +96,99 @@ namespace JOB_FINDER.Controllers
             }
             return View(db.POSTs.Where(x => x.CompanyID == id).ToList());
             //return View(cOMPANY);
+        }
+
+        //For Final Checkpoint
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        //For Final Checkpoint
+        [HttpPost]
+        public ActionResult ForgotPassword(COMPANY cOMPANY)
+        {
+            //ModelState.Clear();
+            db.Configuration.ValidateOnSaveEnabled = false;
+
+            string usermail = Convert.ToString(cOMPANY.Email);
+            var user = db.COMPANies.FirstOrDefault(u => u.Email.Equals(usermail));
+
+            if (user != null)
+            {
+
+                MailMessage mm = new MailMessage("job.finder.840@gmail.com", usermail/*txtEmail.Text.Trim()*/);
+                mm.Subject = "Password Recovery";
+                mm.Body = string.Format("Hi {0},<br /><br />Your password is {1}.<br /><br />Thank You.", user.Name, user.Password);
+                mm.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.EnableSsl = true;
+                NetworkCredential NetworkCred = new NetworkCredential();
+                NetworkCred.UserName = "job.finder.840@gmail.com";
+                NetworkCred.Password = "jobfinder840@@";
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = NetworkCred;
+                smtp.Port = 587;
+                smtp.Send(mm);
+
+
+
+                return RedirectToAction("Login", "COMPANies");
+            }
+            else
+            {
+                ViewBag.Notification = "Such email does not exist in server";
+                return View();
+            }
+            // return View();
+        }
+
+        //For Final Checkpoint
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
+        public ActionResult UpdatePassword()
+        {
+            return View();
+        }
+
+        //For Final Checkpoint
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
+        public ActionResult UpdatePassword(COMPANY cOMPANY)
+        {
+            db.Configuration.ValidateOnSaveEnabled = false;
+            if (Session["company_email"] != null)
+            {
+                string userMail = Convert.ToString(Session["company_email"]);
+                var user = db.COMPANies.FirstOrDefault(u => u.Email.Equals(userMail));
+
+                if (!user.Password.Equals(cOMPANY.OldPassword))
+                {
+                    ViewBag.Notification = "Current Password is wrong";
+                    return View();
+
+                }
+                else if (cOMPANY.Password.Length < 6 || cOMPANY.ConfirmPassword.Length < 6)
+                {
+                    return View();
+                }
+                else if (cOMPANY.Password != cOMPANY.ConfirmPassword)
+                {
+                    return View();
+                }
+                else
+                {
+                    user.Password = cOMPANY.Password;
+                    db.Set<COMPANY>().AddOrUpdate(user);
+                    db.SaveChanges();
+                    return RedirectToAction("CompanyProfile", "COMPANies");
+                }
+
+            }
+
+            return RedirectToAction("Signout");
+
         }
 
 

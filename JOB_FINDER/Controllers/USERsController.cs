@@ -236,6 +236,8 @@ namespace JOB_FINDER.Controllers
             return View();
         }
 
+        //For Final Checkpoint
+
         [HttpPost]
         public ActionResult ChangePassword(USER uSER)
         {
@@ -245,26 +247,34 @@ namespace JOB_FINDER.Controllers
             string usermail = Convert.ToString(uSER.Email);
             USER user = db.USERS.FirstOrDefault(u => u.Email.Equals(usermail));
 
-            MailMessage mm = new MailMessage("job.finder.840@gmail.com", usermail/*txtEmail.Text.Trim()*/);
-            mm.Subject = "Password Recovery";
-            mm.Body = string.Format("Hi {0},<br /><br />Your password is {1}.<br /><br />Thank You.", user.Name, user.Password);
-            mm.IsBodyHtml = true;
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.gmail.com";
-            smtp.EnableSsl = true;
-            NetworkCredential NetworkCred = new NetworkCredential();
-            NetworkCred.UserName = "job.finder.840@gmail.com";
-            NetworkCred.Password = "jobfinder840@@";
-            smtp.UseDefaultCredentials = false;
-            smtp.Credentials = NetworkCred;
-            smtp.Port = 587;
-            smtp.Send(mm);
+            if (user != null) 
+            { 
 
-           
+                MailMessage mm = new MailMessage("job.finder.840@gmail.com", usermail/*txtEmail.Text.Trim()*/);
+                mm.Subject = "Password Recovery";
+                mm.Body = string.Format("Hi {0},<br /><br />Your password is {1}.<br /><br />Thank You.", user.Name, user.Password);
+                mm.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.EnableSsl = true;
+                NetworkCredential NetworkCred = new NetworkCredential();
+                NetworkCred.UserName = "job.finder.840@gmail.com";
+                NetworkCred.Password = "jobfinder840@@";
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = NetworkCred;
+                smtp.Port = 587;
+                smtp.Send(mm);
 
-            return RedirectToAction("SignIn", "USERs");
-            // return View();
+                return RedirectToAction("SignIn", "USERs");
+            }
+            else
+            {
+                ViewBag.Notification = "Such email does not exist in server";
+                return View();
+            }
         }
+
+        //For Final Checkpoint
 
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult UpdatePassword()
@@ -272,9 +282,45 @@ namespace JOB_FINDER.Controllers
             return View();
         }
 
+        //For Final Checkpoint
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult UpdatePassword(USER uSER)
         {
-            return View();
+            db.Configuration.ValidateOnSaveEnabled = false;
+            if (Session["Email"] != null)
+            {
+                string userMail = Convert.ToString(Session["Email"]);
+                var user = db.USERS.FirstOrDefault(u => u.Email.Equals(userMail));
+
+                if(!user.Password.Equals(uSER.OldPassword))
+                {
+                    ViewBag.Notification = "Current Password is wrong";
+                    return View();
+                    
+                }
+                else if (uSER.Password.Length < 6 || uSER.ConfirmPassword.Length < 6)
+                {
+                    return View();
+                }
+                else if(uSER.Password!= uSER.ConfirmPassword)
+                {
+                    return View();
+                }
+                else
+                {
+                    user.Password = uSER.Password;
+                    db.Set<USER>().AddOrUpdate(user);
+                    db.SaveChanges();
+                    return RedirectToAction("ViewProfile", "USERs");
+                }
+
+            }
+
+            return RedirectToAction("SignOut", "USERs");
+           
         }
 
 

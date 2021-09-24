@@ -14,13 +14,14 @@ namespace JOB_FINDER.Controllers
     {
         private JobFinderDBEntities db = new JobFinderDBEntities();
 
-        // GET: POSTs
         // GET: POSTs/Create
         public ActionResult Create()
         {
-            ViewBag.CompanyID = new SelectList(db.COMPANies, "CompanyID", "Name");
+            //ViewBag.CompanyID = new SelectList(db.COMPANies, "CompanyID", "Name");
+            ViewBag.CompanyID = Session["CompanyID"];
             return View();
         }
+
         // POST: POSTs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -38,13 +39,14 @@ namespace JOB_FINDER.Controllers
             ViewBag.CompanyID = new SelectList(db.COMPANies, "CompanyID", "Name", pOST.CompanyID);
             return View(pOST);
         }
+
         public ActionResult Index(string searchByExp, string searchBySal, string searching)
         {
             if (searchByExp == "0-2")
             {
                 if (!String.IsNullOrWhiteSpace(searching))
                 {
-                    if(searchBySal == "5,000-20,000")
+                    if (searchBySal == "5,000-20,000")
                     {
                         return View(db.POSTs.Where(x => x.Experience >= 0 && x.Experience <= 2 && x.Salary >= 5000 && x.Salary <= 20000 && x.Location.Contains(searching)).ToList());
                     }
@@ -227,22 +229,6 @@ namespace JOB_FINDER.Controllers
 
             return View();
         }
-
-        /*
-        public ActionResult Index(string searching)
-        {
-            int exp;
-            if (String.IsNullOrWhiteSpace(searching))
-            {
-                exp = 0;
-            }
-            else
-            {
-                exp = Convert.ToInt32(searching);
-            }
-            return View(db.POSTs.Where(x => x.Experience == exp || searching == null).ToList());
-        }
-        */
 
         protected override void Dispose(bool disposing)
         {

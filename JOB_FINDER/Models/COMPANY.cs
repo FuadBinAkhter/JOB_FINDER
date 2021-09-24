@@ -12,6 +12,7 @@ namespace JOB_FINDER.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class COMPANY
     {
@@ -50,6 +51,11 @@ namespace JOB_FINDER.Models
         [Display(Name = "Confirm Password")]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
+
+        //for Final checkpoint
+        [NotMapped]
+        [DataType(DataType.Password)]
+        public string OldPassword { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<POST> POSTs { get; set; }

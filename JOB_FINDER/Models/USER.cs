@@ -50,6 +50,11 @@ namespace JOB_FINDER.Models
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
 
+        //for Final checkpoint
+        [NotMapped]
+        [DataType(DataType.Password)]
+        public string OldPassword { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<APPLICATION> APPLICATIONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

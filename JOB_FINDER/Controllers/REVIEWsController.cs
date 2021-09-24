@@ -37,11 +37,24 @@ namespace JOB_FINDER.Controllers
         }
 
         // GET: REVIEWs/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.CompanyID = new SelectList(db.COMPANies, "CompanyID", "Name");
-            ViewBag.UserID = new SelectList(db.USERS, "UserID", "Name");
-            return View();
+            //ViewBag.CompanyID = new SelectList(db.COMPANies, "CompanyID", "Name");
+            //ViewBag.UserID = new SelectList(db.USERS, "UserID", "Name");
+            COMPANY cOMPANY = db.COMPANies.Find(id);
+            ViewBag.CompanyName = cOMPANY.Name;
+            if (Session["UserID"] == null)
+            {
+                ViewBag.Notification = "Please login first!";
+                return View();
+            }
+            else
+            {
+                ViewBag.UserID = Session["UserID"];
+                ViewBag.CompanyID = id;
+                ViewBag.Date = DateTime.Today.ToString("d");
+                return View();
+            }
         }
 
         // POST: REVIEWs/Create
@@ -49,17 +62,24 @@ namespace JOB_FINDER.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ReviewID,UserID,CompanyID,ReviewDate,Description")] REVIEW rEVIEW)
+        public ActionResult Create([Bind(Include = "ReviewID,CompanyID,UserID,Description,ReviewDate")] REVIEW rEVIEW)
         {
-            if (ModelState.IsValid)
+            if (Session["UserID"] == null)
             {
-                db.REVIEWs.Add(rEVIEW);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.Notification = "Please login first!";
             }
-
-            ViewBag.CompanyID = new SelectList(db.COMPANies, "CompanyID", "Name", rEVIEW.CompanyID);
-            ViewBag.UserID = new SelectList(db.USERS, "UserID", "Name", rEVIEW.UserID);
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    db.REVIEWs.Add(rEVIEW);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "POSTs");
+                }
+            }
+            //ViewBag.CompanyID = new SelectList(db.COMPANies, "CompanyID", "Name", rEVIEW.CompanyID);
+            //ViewBag.UserID = new SelectList(db.USERS, "UserID", "Name", rEVIEW.UserID);
+            //ViewBag.UserID = Session["UserID"];
             return View(rEVIEW);
         }
 

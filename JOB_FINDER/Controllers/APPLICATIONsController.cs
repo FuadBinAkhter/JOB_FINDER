@@ -17,8 +17,10 @@ namespace JOB_FINDER.Controllers
         // GET: APPLICATIONs
         public ActionResult Index()
         {
-            var aPPLICATIONS = db.APPLICATIONS.Include(a => a.POST).Include(a => a.USER);
-            return View(aPPLICATIONS.ToList());
+            int id = (int)Session["UserID"];
+            //var aPPLICATIONS = db.APPLICATIONS.Include(a => a.POST).Include(a => a.USER);
+            //APPLICATION aPPLICATION = db.APPLICATIONS.Find(id);
+            return View(db.APPLICATIONS.Where(x => x.UserID == id).ToList());
         }
 
         // GET: APPLICATIONs/Details/5

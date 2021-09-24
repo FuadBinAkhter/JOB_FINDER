@@ -184,7 +184,11 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Compile Include="Controllers\ApplicationJoinedUserController.cs" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\StyleSheet.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -208,6 +212,11 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -221,6 +230,10 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Views\COMPANies\SeePrevPostst.cshtml" />
     <Content Include="Views\ApplicationJoinedUser\Index.cshtml" />
+    <Content Include="Views\APPLICATIONs\Delete.cshtml" />
+    <Content Include="Views\APPLICATIONs\Index.cshtml" />
+    <Content Include="Views\COMPANies\ForgotPassword.cshtml" />
+    <Content Include="Views\COMPANies\UpdatePassword.cshtml" />
     <None Include="Views\POSTs\Apply.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -255,6 +268,9 @@
     <Content Include="Views\USERs\EditProfile.cshtml" />
     <Content Include="Views\USERs\ChangePassword.cshtml" />
     <Content Include="Views\USERs\SeeApplicantProfile.cshtml" />
+    <Content Include="Views\USERs\UpdatePassword.cshtml" />
+    <Content Include="Views\REVIEWs\Create.cshtml" />
+    <Content Include="Views\RECOMMENDATIONs\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

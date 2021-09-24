@@ -8,34 +8,36 @@
 
 @foreach (var item in Model)
 {
-<div>
-    <p>
-        @Html.DisplayFor(modelItem => item.Name)
-    </p>
-    <p>
-        @Html.DisplayFor(modelItem => item.Phone)
-    </p>
-    <p>
-        @Html.DisplayFor(modelItem => item.Email)
-    </p>
-    <p>
-        @Html.DisplayFor(modelItem => item.University)
-    </p>
-    <p>
-        @Html.DisplayFor(modelItem => item.Skill)
-    </p>
-    <p>
-        @Html.DisplayFor(modelItem => item.Address)
-    </p>
-    <p>
-        @if (item.CV == null)
-        {
+    <div>
+        <p>
+            @Html.DisplayFor(modelItem => item.Name)
+        </p>
+        <p>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </p>
+        <p>
+            @Html.DisplayFor(modelItem => item.Email)
+        </p>
+        <p>
+            @Html.DisplayFor(modelItem => item.University)
+        </p>
+        <p>
+            @Html.DisplayFor(modelItem => item.Skill)
+        </p>
+        <p>
+            @Html.DisplayFor(modelItem => item.Address)
+        </p>
+        <p>
+            @if (item.CV == null)
+            {
             <p>No CV found.</p>
         }
         else
         {
             @Html.ActionLink("Download", "Download", "USERs", new { fileName = item.CV }, null)
         }
-    </p>
-</div>
-}
+            </p>
+            <!--Added after merge-->
+            <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Create", "RECOMMENDATIONs", new { id = item.UserID })'">Give Recommendation</button>
+        </div>
+    }

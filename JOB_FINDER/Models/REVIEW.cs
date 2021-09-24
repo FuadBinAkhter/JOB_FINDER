@@ -11,15 +11,19 @@ namespace JOB_FINDER.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class REVIEW
     {
         public int ReviewID { get; set; }
         public int UserID { get; set; }
         public int CompanyID { get; set; }
         public System.DateTime ReviewDate { get; set; }
+
+        //Annotation added
+        [Required]
         public string Description { get; set; }
-    
+
         public virtual COMPANY COMPANY { get; set; }
         public virtual USER USER { get; set; }
     }
