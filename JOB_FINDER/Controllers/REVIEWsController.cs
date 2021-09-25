@@ -15,10 +15,27 @@ namespace JOB_FINDER.Controllers
         private JobFinderDBEntities db = new JobFinderDBEntities();
 
         // GET: REVIEWs
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var rEVIEWs = db.REVIEWs.Include(r => r.COMPANY).Include(r => r.USER);
-            return View(rEVIEWs.ToList());
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            /*
+            USER uSER = db.USERS.Find(id);
+            if (uSER == null)
+            {
+                return HttpNotFound();
+            }
+            */
+            COMPANY cOMPANY = db.COMPANies.Find(id);
+            if (cOMPANY == null)
+            {
+                return HttpNotFound();
+            }
+            return View(db.REVIEWs.Where(x => x.CompanyID == id).ToList());
+            //var rEVIEWs = db.REVIEWs.Include(r => r.COMPANY).Include(r => r.USER);
+            //return View(rEVIEWs.ToList());
         }
 
         // GET: REVIEWs/Details/5

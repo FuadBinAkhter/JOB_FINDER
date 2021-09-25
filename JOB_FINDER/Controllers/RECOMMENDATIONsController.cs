@@ -15,10 +15,20 @@ namespace JOB_FINDER.Controllers
         private JobFinderDBEntities db = new JobFinderDBEntities();
 
         // GET: RECOMMENDATIONs
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var rECOMMENDATIONs = db.RECOMMENDATIONs.Include(r => r.COMPANY).Include(r => r.USER);
-            return View(rECOMMENDATIONs.ToList());
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            USER uSER = db.USERS.Find(id);
+            if (uSER == null)
+            {
+                return HttpNotFound();
+            }
+            return View(db.RECOMMENDATIONs.Where(x => x.UserID == id).ToList());
+            //var rECOMMENDATIONs = db.RECOMMENDATIONs.Include(r => r.COMPANY).Include(r => r.USER);
+            //return View(rECOMMENDATIONs.ToList());
         }
 
         // GET: RECOMMENDATIONs/Details/5

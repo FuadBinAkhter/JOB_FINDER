@@ -51,10 +51,9 @@ namespace JOB_FINDER.Controllers
 
                 if (company != null)
                 {
-                    //Added after merge
-                    Session["CompanyID"] = company.CompanyID;
-                    //
                     Session["company_email"] = company.Email;
+                    //This line added for CP 2
+                    Session["CompanyID"] = company.CompanyID;
                     return RedirectToAction("CompanyProfile");
                 }
                 else
@@ -68,10 +67,17 @@ namespace JOB_FINDER.Controllers
 
         public ActionResult CompanyProfile()
         {
-            string email = Convert.ToString(Session["company_email"]);
-            var company = db.COMPANies.Where(c => c.Email.Equals(email)).FirstOrDefault();
+            if (Session["company_email"] != null)
+            {
+                string email = Convert.ToString(Session["company_email"]);
+                var company = db.COMPANies.Where(c => c.Email.Equals(email)).FirstOrDefault();
 
-            return View(company);
+                return View(company);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         //signout added
@@ -89,7 +95,6 @@ namespace JOB_FINDER.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             COMPANY cOMPANY = db.COMPANies.Find(id);
-
             if (cOMPANY == null)
             {
                 return HttpNotFound();
@@ -191,9 +196,16 @@ namespace JOB_FINDER.Controllers
 
         }
 
+        public ActionResult SeeCompanyProfile(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            return View(db.COMPANies.Where(x => x.CompanyID == id).ToList());
+        }
 
-        /*private Job_FinderContext db = new Job_FinderContext();
-
+        /*
         // GET: COMPANies
         public ActionResult Index()
         {
@@ -226,7 +238,7 @@ namespace JOB_FINDER.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CompanyID,Name,Description,Address,Phone,Email")] COMPANY cOMPANY)
+        public ActionResult Create([Bind(Include = "CompanyID,Name,Description,Address,Phone,Email,Password")] COMPANY cOMPANY)
         {
             if (ModelState.IsValid)
             {
@@ -258,7 +270,7 @@ namespace JOB_FINDER.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CompanyID,Name,Description,Address,Phone,Email")] COMPANY cOMPANY)
+        public ActionResult Edit([Bind(Include = "CompanyID,Name,Description,Address,Phone,Email,Password")] COMPANY cOMPANY)
         {
             if (ModelState.IsValid)
             {
@@ -302,6 +314,7 @@ namespace JOB_FINDER.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }*/
+        }
+        */
     }
 }

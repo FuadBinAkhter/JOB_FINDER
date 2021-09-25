@@ -234,6 +234,7 @@
     <Content Include="Views\APPLICATIONs\Index.cshtml" />
     <Content Include="Views\COMPANies\ForgotPassword.cshtml" />
     <Content Include="Views\COMPANies\UpdatePassword.cshtml" />
+    <Content Include="Views\COMPANies\SeeCompanyProfile.cshtml" />
     <None Include="Views\POSTs\Apply.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -271,6 +272,8 @@
     <Content Include="Views\USERs\UpdatePassword.cshtml" />
     <Content Include="Views\REVIEWs\Create.cshtml" />
     <Content Include="Views\RECOMMENDATIONs\Create.cshtml" />
+    <Content Include="Views\REVIEWs\Index.cshtml" />
+    <Content Include="Views\RECOMMENDATIONs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

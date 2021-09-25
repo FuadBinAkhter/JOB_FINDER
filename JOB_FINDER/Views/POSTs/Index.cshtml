@@ -42,8 +42,8 @@
                             <!--button changed for CP 2-->
                             <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Apply", "POSTs", new { id = item.PostID })'">Apply</button>
 
-                            <!--button added for CP 3-->
-                            <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Create", "REVIEWs", new { id = item.CompanyID })'">Give Review</button>
+                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("SeeCompanyProfile", "COMPANies", new { id = item.CompanyID })'">View Company</button>
+
 
                         </div>
                     </div>

@@ -37,7 +37,17 @@
             @Html.ActionLink("Download", "Download", "USERs", new { fileName = item.CV }, null)
         }
             </p>
-            <!--Added after merge-->
-            <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Create", "RECOMMENDATIONs", new { id = item.UserID })'">Give Recommendation</button>
+        </div>
+
+        <!--button added for CP 3-->
+        <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Create", "RECOMMENDATIONs", new { id = item.UserID })'">Give Recommendation</button>
+
+
+        <!--My work for final checkpoint: Needs to be changed-->
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-8">
+                <h5 style="margin-left: 100px;">@Html.ActionLink("See recommendations about this user", "Index", "RECOMMENDATIONs", new { id = item.UserID }, null)</h5>
+            </div>
         </div>
     }
+

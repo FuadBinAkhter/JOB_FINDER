@@ -1,0 +1,35 @@
+﻿@model IEnumerable<JOB_FINDER.Models.COMPANY>
+
+@{
+    ViewBag.Title = "SeeCompanyProfile";
+}
+
+<h2>SeeCompanyProfile</h2>
+
+@foreach (var item in Model)
+{
+<div>
+    <p>
+        @Html.DisplayFor(modelItem => item.Name)
+    </p>
+    <p>
+        @Html.DisplayFor(modelItem => item.Phone)
+    </p>
+    <p>
+        @Html.DisplayFor(modelItem => item.Email)
+    </p>
+    <p>
+        @Html.DisplayFor(modelItem => item.Address)
+    </p>
+    <p>
+        @Html.DisplayFor(modelItem => item.Description)
+    </p>
+
+    <!--button added for CP 3-->
+    <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Create", "REVIEWs", new { id = item.CompanyID })'">Give Review</button>
+
+    <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Index", "REVIEWs", new { id = item.CompanyID })'">See reviews about this company</button>
+
+</div>
+}
+
