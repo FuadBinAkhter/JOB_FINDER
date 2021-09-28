@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div>
+
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="#" class="navbar-brand">
+                        <img class="" style="height: 60px;" src="~/images/onlinelogomaker-092221-2227-9311.svg">
+                    </a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav" style="margin-right: auto; margin-left: auto;">
+                        <li>
+                            @Html.ActionLink("Home", "Index", "Home")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Search for Jobs", "Index", "POSTs")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Company", "SignUp", "COMPANies")
+                        </li>
+                        <li>
+                            @Html.ActionLink("Job Seeker", "SignUp", "USERs")
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        @RenderBody()
+
+    <footer>
+        <div class="container-fluid">
+            <div class="row text-center">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <h4>Shortcuts</h4>
+                    <p>Post jobs</p>
+                    <p>Search Jobs</p>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <h4>Account</h4>
+                    <p>Company</p>
+                    <p>Job Seeker</p>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <h4>Contact Us</h4>
+                    <p>+01287654321</p>
+                    <p>job.finder@yahoo.com</p>
+                </div>
+            </div>
+
+            <hr class="mb-4" />
+
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12 text-center">
+                    <p>&copy; Copyrights 2021 - All Rights Reserved By <strong>JobFinder</strong></p>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="text-center">
+                        <ul class="list-unstyled list-inline">
+                            <li class="list-inline-item">
+                                <a href="https://www.google.com/"><i class="fab fa-facebook-square"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://www.google.com/"><i class="fab fa-instagram"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://www.google.com/"><i class="fab fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+
+    </div>
+
+</body>
+</html>

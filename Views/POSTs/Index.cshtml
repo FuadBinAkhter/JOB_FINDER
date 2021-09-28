@@ -1,0 +1,54 @@
+﻿@model IEnumerable<JOB_FINDER.Models.POST>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-sm-12" style="border: 0.5px solid #e2e0e0; border-radius: 10px; box-shadow: 1.5px 1.5px 1.5px 1.5px #ded8d8; margin-top: 30px; margin-bottom: 30px; ">
+            @using (Html.BeginForm("Index", "POSTs", FormMethod.Get))
+            {
+                <h3 style="margin-top: 15px">Experience: </h3>
+                @Html.RadioButton("searchByExp", "0-2")<p>0-2</p>
+                @Html.RadioButton("searchByExp", "3-5")<p>3-5</p>
+                @Html.RadioButton("searchByExp", "6-10")<p>6-10</p>
+                <h3 style="margin-top: 7.5px">Salary: </h3>
+                @Html.RadioButton("searchBySal", "5,000-20,000")<p>5,000-20,000</p>
+                @Html.RadioButton("searchBySal", "20,001-50,000")<p>20,001-50,000</p>
+                @Html.RadioButton("searchBySal", "50,000+")<p>50,000+</p>
+                <h3 style="margin-top: 7.5px">Location: </h3>
+                <div style="margin-bottom: 15px">
+                    @Html.TextBox("Searching")
+                    <input type="submit" value="Filter" class="btn" style="background-color: #1ba94c; color: white;" />
+                </div>
+            }
+        </div>
+        <div class="col-md-8 col-sm-12">
+            @if (Model.Count() == 0)
+            {
+                <h2>Nothing Found!</h2>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <div class="card" style="margin-top: 15px; margin-bottom: 15px; border: 0.5px solid #e2e0e0; border-radius: 10px; box-shadow: 1.5px 1.5px 1.5px 1.5px #ded8d8; padding: 15px;">
+                        <div class="card-header" style="color: #1ba94c; padding: 5px; font-size: 25px;">
+                            @Html.DisplayFor(modelItem => item.COMPANY.Name)
+                        </div>
+                        <div class="card-body" style="padding: 5px;">
+                            <h3 class="card-title">@Html.DisplayFor(modelItem => item.Description)</h3>
+                            <p class="card-text">@Html.DisplayNameFor(model => model.Location): @Html.DisplayFor(modelItem => item.Location)</p>
+                            <p class="card-text">@Html.DisplayNameFor(model => model.Experience): @Html.DisplayFor(modelItem => item.Experience) Years</p>
+                            <p class="card-text">@Html.DisplayNameFor(model => model.Salary): @Html.DisplayFor(modelItem => item.Salary) Tk.</p>
+                            <!--<a href="#" class="btn btn-success">Apply</a>-->
+                            <!--button changed for CP 2-->
+                            <button type="button" class="btn" style="background-color: #1ba94c; color: white;" onclick="location.href='@Url.Action("Apply", "POSTs", new { id = item.PostID })'">Apply</button>
+
+                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("SeeCompanyProfile", "COMPANies", new { id = item.CompanyID })'">View Company</button>
+
+
+                        </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>

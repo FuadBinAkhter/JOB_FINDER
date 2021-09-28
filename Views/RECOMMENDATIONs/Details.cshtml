@@ -1,0 +1,50 @@
+﻿@model JOB_FINDER.Models.RECOMMENDATION
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RECOMMENDATION</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecommendationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecommendationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COMPANY.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COMPANY.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.USER.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.USER.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RecommendationID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

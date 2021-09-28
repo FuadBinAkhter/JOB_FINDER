@@ -1,0 +1,42 @@
+﻿@model JOB_FINDER.Models.APPLICATION
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>APPLICATION</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.POST.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.POST.Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.USER.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.USER.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ApplicationID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<JOB_FINDER.Models.USER>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm("Index", "USERs", FormMethod.Get))
+{
+    <div style="padding: 5px; margin-top: 25px; margin-bottom: 15px; font-size: 20px; text-align: center">
+        <span>What skills are you looking for?</span>
+        <span>
+            @Html.TextBox("Searching")
+            <input type="submit" value="Search" class="btn btn-success" style="font-size: 18px;" />
+        </span>
+    </div>
+}
+
+@if (Model.Count() == 0)
+{
+    <h2>Nothing Found!</h2>
+}
+else
+{
+    foreach (var item in Model)
+    {
+
+        <div style="background-color: rgb(250 249 249);">
+            <div style="padding: 25px; margin-top: 15px; margin-bottom: 15px;">
+                <span style="font-size: 20px;">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </span>
+                <span class="text-danger" style="font-size: 15px;">
+                    @Html.DisplayNameFor(model => model.Skill): @Html.DisplayFor(modelItem => item.Skill)
+                </span>
+                <span style="float: right;">
+                    <!--
+                    <a href="#" class="btn btn-success">View Profile</a>
+                    -->
+                    @Html.ActionLink("View Profile", "SeeApplicantProfile", "USERs", new { id = item.UserID }, null)
+                </span>
+            </div>
+        </div>
+
+    }
+}

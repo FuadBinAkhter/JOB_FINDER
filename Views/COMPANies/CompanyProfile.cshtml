@@ -1,0 +1,92 @@
+﻿@model JOB_FINDER.Models.COMPANY
+
+@{
+    ViewBag.Title = "CompanyProfile";
+}
+
+<h2 class="text-center" style="margin-top: 50px; margin-bottom: 50px;">Welcome to your company profile!</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <ul class="list-group">
+                <li class="list-group-item">@Html.ActionLink("See your previous posts?", "SeePrevPostst", new { id = Model.CompanyID })</li>
+                <li class="list-group-item">@Html.ActionLink("Create Post", "Create", "POSTs")</li>
+                <li class="list-group-item">@Html.ActionLink("Recruit", "Index", "USERs")</li>
+                <li class="list-group-item">@Html.ActionLink("Update Password", "UpdatePassword", "COMPANies")</li>
+                <li class="list-group-item">@Html.ActionLink("SignOut", "SignOut", "COMPANies")</li>
+            </ul>
+        </div>
+        <div class="col-md-8" style="padding-top: 40px;">
+            <div>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Address)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Phone)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Phone)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+
+                    <!--
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Password)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Password)
+                        </dd>
+                -->
+
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CompanyID })
+</p>
+-->
+<!--Second Checkpoint-->
+<!---->
+
+<!--
+<div>
+    <p><a href="/POSTs/Create" class="btn btn-primary btn-lg">Create Post</a></p>
+    <p><a href="/USERs/Index" class="btn btn-primary btn-lg">Recruit</a></p>
+</div>
+-->

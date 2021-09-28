@@ -1,0 +1,102 @@
+﻿@model JOB_FINDER.Models.USER
+
+@{
+    ViewBag.Title = "ViewProfile";
+}
+
+<h2 class="text-center" style="margin-top: 50px; margin-bottom: 50px;">Welcome @Session["Name"] !!!</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <ul class="list-group">
+                <li class="list-group-item">@Html.ActionLink("Show Applications", "Index", "APPLICATIONs")</li>
+                <li class="list-group-item">@Html.ActionLink("EditProfile", "EditProfile", "USERs")</li>
+                <li class="list-group-item">@Html.ActionLink("Update Password", "UpdatePassword", "USERs")</li>
+                <li class="list-group-item">@Html.ActionLink("SignOut", "SignOut", "USERs")</li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <div>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Phone)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Phone)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Address)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.University)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.University)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Skill)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Skill)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CV)
+                    </dt>
+
+                    <dd>
+                        @if (@ViewBag.Message != null)
+                        {
+                            @ViewBag.Message
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Download", "Download", "USERs", new { fileName = Model.CV }, null)
+                        }
+                    </dd>
+
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,56 @@
+﻿@model JOB_FINDER.Models.RECOMMENDATION
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>RECOMMENDATION</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecommendationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecommendationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COMPANY.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COMPANY.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.USER.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.USER.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
