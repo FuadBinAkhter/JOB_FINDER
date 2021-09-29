@@ -6,6 +6,8 @@
 Finding a job has never been an easy task. It needs patience to search for a suitable job opening and to apply for them. People also might lose an opportunity due to missing relevant information.  The aim of this project is to resolve these issues by providing a platform for the people who are looking for jobs. Through the website, the companies will be able to post about their available job openings and the job finders will be able to apply for the jobs. Sometimes people want to search for jobs based on their preferred location or salary. This website will provide this facility also. Not only that companies will be able to view job seeker's profiles to understand the suitability of the applicant for the job. The whole purpose of this website is to make the job finding process easier and to ensure that no suitable candidate misses a good job opportunity.
 </p>
 
+![alt text](https://github.com/FuadBinAkhter/JOB_FINDER/blob/master/images/Homepage.PNG?raw=true)
+
 ##  **Project Features**
 * Any company or a person can create an account and update their information.
 * Any company can post about a job opening.
